@@ -1,5 +1,6 @@
 <?php
 
+use App\Task;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,6 +17,34 @@ class DatabaseSeeder extends Seeder
 
         // $this->call(UserTableSeeder::class);
 
+        $faker = Faker\Factory::create();
+
+        $this->seedTasks();
+        $this->seedTags();
+
         Model::reguard();
+    }
+
+    /**
+     * @param Faker $faker
+     */
+    private function seedTasks(Faker $faker){
+        foreach ( range(0,100) as $item) {
+            $task = new  Task();
+
+            $task->name = $faker->name();
+            $task->done = $faker->boolean();
+            $task->priority = $faker->randomDigit();
+            $task->save();
+        }
+    }
+
+    private function seeTags(Faker $faker){
+        foreach ( range(0.100) as $item) {
+            $tag = new  Tag();
+
+            $tag->name = $faker->name();
+            $tag->save();
+        }
     }
 }
