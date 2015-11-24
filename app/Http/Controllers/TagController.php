@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use phpDocumentor\Reflection\DocBlock\Tag;
 
 class TagController extends Controller
 {
@@ -16,7 +17,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        return Tag::all();
     }
 
     /**
