@@ -41,8 +41,7 @@ class TagController extends Controller
     {
         $tag = new tag();
 
-        $tag->name = $request->name;
-        $tag->save();
+        $this->saveTag($request, $tag);
     }
 
     /**
@@ -79,7 +78,8 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $tag = Tag::findOrFail($id);
+        $this->saveTag($request, $tag);
     }
 
     /**
@@ -91,5 +91,15 @@ class TagController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * @param Request $request
+     * @param $tag
+     */
+    public function saveTag(Request $request, $tag)
+    {
+        $tag->name = $request->name;
+        $tag->save();
     }
 }

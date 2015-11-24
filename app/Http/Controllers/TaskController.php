@@ -42,10 +42,7 @@ class TaskController extends Controller
     {
         $task = new task();
 
-        $task->name = $request->name;
-        $task->done = $request->done;
-        $task->priority = $request->priority;
-        $task->save();
+        $this->saveTask($request, $task);
     }
 
     /**
@@ -82,7 +79,9 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $task = Task::findOrFail($id);
+
+        $this->saveTask($request, $task);
     }
 
     /**
@@ -93,6 +92,18 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Task::destroy($id);
+    }
+
+    /**
+     * @param Request $request
+     * @param $task
+     */
+    public function saveTask(Request $request, $task)
+    {
+        $task->name = $request->name;
+        $task->done = $request->done;
+        $task->priority = $request->priority;
+        $task->save();
     }
 }
