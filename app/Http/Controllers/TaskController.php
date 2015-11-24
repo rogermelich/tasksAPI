@@ -17,6 +17,7 @@ class TaskController extends Controller
      */
     public function index()
     {
+        //problema 1, no retorna: paginació 
         return Task::all();
     }
 
