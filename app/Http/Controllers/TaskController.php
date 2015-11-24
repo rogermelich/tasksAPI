@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use phpDocumentor\Reflection\DocBlock\Tag;
 
 class TaskController extends Controller
 {
@@ -17,7 +18,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //problema 1, no retorna: paginació 
+        //problema 1, no retorna: paginació
         return Task::all();
     }
 
@@ -39,7 +40,12 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $task = new task();
+
+        $task->name = $request->name;
+        $task->done = $request->done;
+        $task->priority = $request->priority;
+        $task->save();
     }
 
     /**
@@ -50,7 +56,10 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        //
+        return $task = Task::findOrFail($id);
+
+        //Es el mateix
+        //$task = Tag::where('id', $id)->first();
     }
 
     /**

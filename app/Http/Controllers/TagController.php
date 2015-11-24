@@ -39,7 +39,10 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tag = new tag();
+
+        $tag->name = $request->name;
+        $tag->save();
     }
 
     /**
@@ -50,7 +53,10 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        //
+        return $tag = Tag::findOrFail($id);
+
+        //Es el mateix
+        //$tag= Tag::where('id', $id)->first();
     }
 
     /**
