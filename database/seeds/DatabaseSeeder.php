@@ -1,5 +1,6 @@
 <?php
 
+use App\Tag;
 use App\Task;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
@@ -29,7 +30,7 @@ class DatabaseSeeder extends Seeder
      * @param Faker $faker
      */
     private function seedTasks(Faker $faker){
-        foreach ( range(0,100) as $item) {
+        foreach ( range(0, 100) as $item) {
             $task = new  Task();
 
             $task->name = $faker->name();
@@ -39,8 +40,11 @@ class DatabaseSeeder extends Seeder
         }
     }
 
-    private function seeTags(Faker $faker){
-        foreach ( range(0.100) as $item) {
+    /**
+     * @param Faker $faker
+     */
+    private function seedTags(Faker $faker){
+        foreach ( range(0, 100) as $item) {
             $tag = new  Tag();
 
             $tag->name = $faker->name();
