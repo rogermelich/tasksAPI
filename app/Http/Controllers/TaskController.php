@@ -20,9 +20,9 @@ class TaskController extends Controller
     public function index()
     {
         //problema 1, no retorna: paginació
-        $tasks = Task::all();
+        $task = Task::all();
         return Response::json([
-            'data' => $tasks->toArray()
+            'data' => $task->toArray()
         ], 200);
     }
 
@@ -57,7 +57,21 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        return $task = Task::findOrFail($id);
+        $task = Task::find($id);
+
+        if ( ! $task){
+            return Response::json([
+                'error' => [
+                    'message' => 'La tasca no existeix',
+                ]
+            ], 404);
+        }
+
+        return Response::json([
+            'data' => $task->toArray()
+        ],200);
+
+        //return $task = Task::findOrFail($id);
 
         //Es el mateix
         //$task = Tag::where('id', $id)->first();
