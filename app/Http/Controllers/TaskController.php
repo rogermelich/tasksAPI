@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use phpDocumentor\Reflection\DocBlock\Tag;
+use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends Controller
 {
@@ -19,7 +20,10 @@ class TaskController extends Controller
     public function index()
     {
         //problema 1, no retorna: paginació
-        return Task::all();
+        $tasks = Task::all();
+        return Response::json([
+            'data' => $tasks->toArray()
+        ], 200);
     }
 
     /**
