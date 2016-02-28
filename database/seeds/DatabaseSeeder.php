@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
 
         $faker = Faker\Factory::create();
 
-        $this->seedTasks();
-        $this->seedTags();
+        $this->seedTasks($faker);
+        $this->seedTags($faker);
 
         Model::reguard();
     }
@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         foreach ( range(0, 100) as $item) {
             $task = new  Task();
 
-            $task->name = $faker->name();
+            $task->name = $faker->sentence();
             $task->done = $faker->boolean();
             $task->priority = $faker->randomDigit();
             $task->save();
@@ -47,7 +47,8 @@ class DatabaseSeeder extends Seeder
         foreach ( range(0, 100) as $item) {
             $tag = new  Tag();
 
-            $tag->name = $faker->name();
+            $tag->name = $faker->world;
+            $tag->prova = $faker->boolean();
             $tag->save();
         }
     }
