@@ -5,13 +5,25 @@ namespace App\Http\Controllers;
 use App\Task;
 use Illuminate\Http\Request;
 
+use Acme\Transformers\TasksTransformer;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends Controller
 {
+    protected $taskTransformer;
+    /**
+     * TaskController constructor.
+     */
+    public function __construct(TaskTransformer $taskTransformer)
+    {
+        $this->taskTransformer = $taskTransformer;
+        $this->middleware('auth.basic', ['only' => 'store']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,9 +33,9 @@ class TaskController extends Controller
     {
         //problema 1, no retorna: paginació
         $task = Task::all();
-        return Response::json([
-            'data' => $task->toArray()
-        ], 200);
+        return $this->respond([
+            'data' => $this->taskTransformer->transformCollection($task->all())
+        ]);
     }
 
     /**
@@ -44,9 +56,13 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $task = new task();
-
-        $this->saveTask($request, $task);
+        if (! Input::get('name') or ! Input::get('done') or ! Input::get('priority'))
+        {
+            return $this->setStatusCode(IlluminateResponse::HTTP_UNPROCESSABLE_ENTITY)
+                ->respondWithError('Parameters failed validation for a task.');
+        }
+        Task::create(Input::all());
+        return $this->respondCreated('Task successfully created.');
     }
 
     /**
@@ -58,18 +74,12 @@ class TaskController extends Controller
     public function show($id)
     {
         $task = Task::find($id);
-
-        if ( ! $task){
-            return Response::json([
-                'error' => [
-                    'message' => 'La tasca no existeix',
-                ]
-            ], 404);
+        if (!$task) {
+            return $this->respondNotFound('La tasca no existeix!');
         }
-
-        return Response::json([
-            'data' => $task->toArray()
-        ],200);
+        return $this->respond([
+            'data' => $this->taskTransformer->transform($task)
+        ]);
 
         //return $task = Task::findOrFail($id);
 

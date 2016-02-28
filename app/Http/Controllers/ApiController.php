@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Acme\Transformers\TagTransformer;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use phpDocumentor\Reflection\DocBlock\Tag;
 
-class TagController extends Controller
+class ApiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +16,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        //problema 1, no retorna: paginació
-        return Tag::all();
+        //
     }
 
     /**
@@ -40,9 +37,7 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        $tag = new tag();
-
-        $this->saveTag($request, $tag);
+        //
     }
 
     /**
@@ -53,10 +48,7 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        return $tag = Tag::findOrFail($id);
-
-        //Es el mateix
-        //$tag= Tag::where('id', $id)->first();
+        //
     }
 
     /**
@@ -79,8 +71,7 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $tag = Tag::findOrFail($id);
-        $this->saveTag($request, $tag);
+        //
     }
 
     /**
@@ -92,15 +83,5 @@ class TagController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    /**
-     * @param Request $request
-     * @param $tag
-     */
-    public function saveTag(Request $request, $tag)
-    {
-        $tag->name = $request->name;
-        $tag->save();
     }
 }
