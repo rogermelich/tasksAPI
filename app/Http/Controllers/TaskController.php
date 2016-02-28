@@ -124,4 +124,14 @@ class TaskController extends Controller
         $task->priority = $request->priority;
         $task->save();
     }
+
+    public function transform ($tasks){
+        return arry_map(function ($task){
+            return [
+            'name' => $task['name'],
+            'text' => $task['text'],
+            'done' => $task['done'],
+                ];
+        }, $tasks->toArray());
+    }
 }
