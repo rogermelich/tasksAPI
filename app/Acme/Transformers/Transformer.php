@@ -1,14 +1,13 @@
 <?php
 
-namespace Acme\Transformers;
+namespace App\Acme\Transformers;
 
-class TagTransformer extends Transformer
+abstract class Transformer
 {
-    public function transform($tag)
+    public function transformCollection(array $items)
     {
-        return [
-            'name' => $tag['name'],
-            'some_bool' => (boolean) $tag['prova'],
-        ];
+        return array_map([$this, 'transform'], $items);
     }
+
+    public abstract function transform($item);
 }

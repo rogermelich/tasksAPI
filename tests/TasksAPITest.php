@@ -18,7 +18,7 @@ class TasksAPITest extends TestCase
 
     public function testTaskReturn404OnTestNotExists()
     {
-        $this->get('/tasjs/50000')->seeJson()->seeStatusCode(404);
+        $this->get('/tasks/50000')->seeJson()->seeStatusCode(404);
     }
     /**
      * Test tasks in database are listed by API
@@ -93,7 +93,7 @@ class TasksAPITest extends TestCase
         $task = $this->createFakeTask();
         $data = [ 'name' => 'Learn Laravel', 'done' => false , 'priority' => 3];
         $this->put('/task/' . $task->id, $data)->seeInDatabase('tasks',$data);
-        $this->get('/task')->seeJsonContains($data)->seeStatusCode(200);
+        $this->get('/task')->seeJsonContains(['name' => 'Learn Laravel', 'done' => true, 'priority' => 1])->seeStatusCode(200);
     }
     /**
      * Test tasks can be deleted and not see on database

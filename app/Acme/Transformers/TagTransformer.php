@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme\Transformers;
+namespace App\Acme\Transformers;
 
 class TagTransformer extends Transformer
 {
@@ -8,7 +8,6 @@ class TagTransformer extends Transformer
     {
         return [
             'name' => $tag['name'],
-            'some_bool' => (boolean) $tag['prova'],
         ];
     }
 }

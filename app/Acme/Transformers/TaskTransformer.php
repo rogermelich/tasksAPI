@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme\Transformers;
+namespace App\Acme\Transformers;
 
 class TaskTransformer extends Transformer
 {
@@ -8,7 +8,7 @@ class TaskTransformer extends Transformer
     {
         return [
             'name' => $task['name'],
-            'some_bool' => (boolean)$task['done'],
+            'Learn Laravel' => (boolean)$task['done'],
             'priority' => $task['priority'],
         ];
     }

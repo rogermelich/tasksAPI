@@ -4,22 +4,33 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Acme\Transformers\TagTransformer;
+use App\Acme\Transformers\TagTransformer;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 class TagController extends Controller
 {
+    protected $tagTransformer;
+    /**
+     * TagController constructor.
+     */
+    public function __construct(TagTransformer $tagTransformer)
+    {
+        $this->tagTransformer = $tagTransformer;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($taskId = null)
     {
         //problema 1, no retorna: paginació
-        return Tag::all();
+        //$tag = Tag::all();
+        $tag = $this->getTags($taskId);
+        return $this->respond($this->tagTransformer->transformCollection($tag->all()));
     }
 
     /**
