@@ -17,3 +17,9 @@ Route::get('/', function () {
 
 Route::resource('task', 'TaskController');
 Route::resource('tag', 'TagController');
+
+Route::group(['prefix' => 'api/v1', 'middleware' => 'auth:api'], function () {
+    Route::post('/short', 'UrlMapperController@store');
+});
+
+Auth::guard('api')->user();
