@@ -15,11 +15,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('task', 'TaskController');
-Route::resource('tag', 'TagController');
-
 //Route::group(['prefix' => 'api/v1', 'middleware' => 'auth:api'], function () {
 //    Route::post('/short', 'UrlMapperController@store');
 //});
 //
 //Auth::guard('api')->user();
+
+Route::get('/auth/login', function(){
+    return("No tens Accés a l'API");
+});
+
+Route::group(['prefix' => 'api', 'middleware' => 'throttle:6,10'], function () {
+    Route::get('people', function () {
+        return Person::all();
+    });
+});
